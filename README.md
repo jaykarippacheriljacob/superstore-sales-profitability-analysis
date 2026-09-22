@@ -12,7 +12,7 @@ I started here because "sales are up" is a meaningless headline without knowing 
 - Fields: order/ship dates, category/sub-category, sales, discount, profit, region, segment
 
 ## Tools
-SQL (SQLite, window functions) → Python/Pandas + statsmodels for cleaning, EDA, and hypothesis testing → (dashboard: planned next)
+SQL (SQLite, window functions) · Python/Pandas + statsmodels (cleaning, EDA, hypothesis testing) · Tableau Public (dashboard)
 
 ## Process
 
@@ -45,6 +45,14 @@ Logistic regression predicting loss (binary) from discount level:
 - Pseudo R² = 0.64 — the model explains a substantial share of the loss/profit variation
 - **Predicted loss probability crosses 50% at 26.3% discount** — closely matching the cliff observed visually in the EDA
 
+### 5. Dashboard
+Built in Tableau Public — combines the category/region profit breakdown with the discount/loss-rate cliff into one view.
+
+- **Profit by Category & Region**: color-coded grid showing Furniture/Central as the sole loss-making cell (-2,871), against strong performers like Office Supplies/West (52,610) and Technology/East (47,462)
+- **Discount vs Loss Rate**: bar chart confirming the statistical threshold found in the hypothesis test — loss rate stays under 15% through 20% discount (0.000, 0.043, 0.327, 0.137), then jumps to 91.6%+ at 30% and above, plateauing near 100%
+
+[Live dashboard link](https://public.tableau.com/views/Tableau_17900853477400/SuperstoreProfitabilityDashboard?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
 ## What I found
 Discount level is a highly significant, strong predictor of whether an order loses money. Below ~20% discount, most orders are still profitable; above ~26%, an order is statistically more likely than not to be a loss, and by 30%+ discount, loss becomes close to certain (82–100% depending on category). This isn't a gradual erosion — it's a sharp threshold. The effect is broadly consistent across categories and regions, with two notable exceptions: Technology is comparatively more resilient to discounting than Furniture or Office Supplies, and Tables — a loss-maker in 3 of 4 regions — is actually profitable in the West region specifically.
 
@@ -59,9 +67,7 @@ Discount level is a highly significant, strong predictor of whether an order los
   03_hypothesis_test.ipynb  — logistic regression, statistical threshold
 /data
   Sample - Superstore.csv
+/dashboard
+  superstore-dashboard.twbx — Tableau workbook (profit grid + discount/loss-rate chart)
 README.md
 ```
-
-## Next steps
-- Power BI/Tableau dashboard: profit by category/region, discount-vs-loss-rate chart, filterable by segment/year
-- LinkedIn write-up summarizing this analysis
